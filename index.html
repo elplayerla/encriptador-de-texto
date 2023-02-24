@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Encriptador de texto</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <div class="logo">
+            <h1><img src="imagenes/logo.png"></h1>
+        </div>
+
+        <textarea id="texto" name="texto" placeholder="Ingrese el texto aquí" rows="4" cols="50"></textarea>
+
+        <div class="advertencia">
+            <img src="imagenes/bi_exclamation-circle-fill.png">
+            <p>Solo letras minúsculas y sin acentos</p>
+        </div>
+
+        <div class="botones">
+            <button class="encriptar" onclick="encriptar()">Encriptar</button>
+            <button class="desencriptar" onclick="desencriptar()">Desencriptar</button>
+        </div>
+
+        <div id="elementos-ocultar">
+            <img src="imagenes/Muñeco.png" class="muñeco" alt="muñeco">
+
+            <div class="textos">
+                <p class="texto1">Ningún mensaje fue encontrado</p>
+                <p class="texto2">Ingresa el texto que desees encriptar o desencriptar.</p>
+            </div>
+        </div>
+
+        <p id="resultado"></p>
+
+        <button class="copiar" onclick="copiar()">Copiar</button>
+
+        <div class="rectangulo-blanco"></div>
+
+    </body>
+
+    <script>
+        
+        function encriptar() {
+            document.getElementById("elementos-ocultar").style.display = "none";
+
+            var entrada = document.getElementById("texto").value;
+            var resultado = entrada.replace(/e|a|i|o|u/g, function(letra) {
+            switch(letra) {
+                case 'e':
+                return 'enter';
+                case 'a':
+                return 'ai';
+                case 'i':
+                return 'imes';
+                case 'o':
+                return 'ober';
+                case 'u':
+                return 'ufat';
+            }
+            });
+            document.getElementById("resultado").textContent = resultado;
+
+            
+            
+        }
+
+        function desencriptar() {
+            document.getElementById("elementos-ocultar").style.display = "none";
+
+            var entrada = document.getElementById("texto").value;
+            var resultado = entrada.replace(/enter|ai|imes|ober|ufat/g, function(letra) {
+                switch(letra) {
+                    case 'enter':
+                    return 'e';
+                    case 'ai':
+                    return 'a';
+                    case 'imes':
+                    return 'i';
+                    case 'ober':
+                    return 'o';
+                    case 'ufat':
+                    return 'u';
+                }
+            });
+            document.getElementById("resultado").textContent = resultado;
+        }
+
+        
+        function copiar() {
+            const resultado = document.getElementById("resultado");
+            const texto = resultado.innerText;
+            const alerta = document.createElement("div");
+            alerta.textContent = "Texto copiado al portapapeles.";
+            
+            navigator.clipboard.writeText(texto)
+            .then(() => {
+            console.log("Texto copiado al portapapeles: " + texto);
+            })
+            .catch(err => {
+            console.error("Error al copiar el texto: ", err);
+            });
+
+            // Agregar estilos
+            alerta.style.backgroundColor = "transparent";
+            alerta.style.color = "black";
+            alerta.style.padding = "10px";
+        
+            // Agregar elemento al DOM
+            document.body.appendChild(alerta);
+        
+            // Desvanecer la alerta después de 3 segundos
+            setTimeout(() => {
+                alerta.style.opacity = "0";
+                setTimeout(() => {
+                alerta.remove();
+                }, 1000);
+            }, 3000);
+        }
+
+</script>
+
+    </script>
+
+    <footer>
+        <p>Brayan Sánchez©</p>
+    </footer>
+
+</html>
